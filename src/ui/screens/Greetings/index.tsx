@@ -1,7 +1,8 @@
 import { ImageBackground } from 'react-native';
-import { AppText } from '@ui/components/AppText';
 import greetingsBg from '@ui/assets/greetings-bg/image.png';
 import { styles } from './style';
+import Logo from '@ui/assets/Logo';
+import { AppButton } from '@ui/components/Button';
 
 export function Greetings() {
     return (
@@ -10,7 +11,9 @@ export function Greetings() {
             resizeMode="cover"
             style={styles.container}
         >
-            <AppText>Hello, World!</AppText>
+            <Logo width={187} height={60} />
+
+            <AppButton>Criar minha conta</AppButton>
         </ImageBackground>
     );
 }

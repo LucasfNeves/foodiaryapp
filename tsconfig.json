@@ -1,13 +1,10 @@
 {
-    "extends": "expo/tsconfig.base",
+    "extends": "./node_modules/expo/tsconfig.base",
     "compilerOptions": {
         "strict": true,
         "paths": {
             "@ui/*": ["./src/ui/*"],
-            "@app/*": ["./src/app/*"],
-            "@assets/*": ["./src/assets/*"],
-            "ui/*": ["./src/ui/*"],
-            "app/*": ["./src/app/*"]
+            "@app/*": ["./src/app/*"]
         },
         "baseUrl": "."
     }
