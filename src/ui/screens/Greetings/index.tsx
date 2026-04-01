@@ -7,8 +7,13 @@ import { theme } from '@ui/styles/theme';
 import { AppButton } from '@ui/components/Button';
 import greetingsBg from '@ui/assets/greetings-bg/image.png';
 import { LinearGradient } from 'expo-linear-gradient';
+import { SignInBottomSheet } from '@ui/components/SignInBottomSheet';
+import { useRef } from 'react';
+import { ISignInBottomSheet } from '@ui/components/SignInBottomSheet/ISignInBottomSheet';
 
 export function Greetings() {
+    const sigInBottomSheetRef = useRef<ISignInBottomSheet>(null);
+
     return (
         <>
             <ImageBackground
@@ -42,7 +47,11 @@ export function Greetings() {
                             <AppText color={theme.colors.white}>
                                 Já tem conta?
                             </AppText>
-                            <TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() =>
+                                    sigInBottomSheetRef.current?.open()
+                                }
+                            >
                                 <AppText
                                     color={theme.colors.lime[500]}
                                     weight="medium"
@@ -54,6 +63,8 @@ export function Greetings() {
                     </View>
                 </SafeAreaView>
             </ImageBackground>
+
+            <SignInBottomSheet ref={sigInBottomSheetRef} />
         </>
     );
 }
