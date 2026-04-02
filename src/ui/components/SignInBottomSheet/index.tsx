@@ -8,6 +8,8 @@ import { useSignInBottomSheetController } from './useSignInBottomSheetController
 import { ISignInBottomSheet } from './ISignInBottomSheet';
 import { AppInput } from '../AppInput';
 import { styles } from './styles';
+import { FormGroup } from '../FormGroup';
+import { View } from 'react-native';
 
 interface ISignInBottomSheetProps {
     ref: React.Ref<ISignInBottomSheet>;
@@ -27,9 +29,14 @@ export function SignInBottomSheet({ ref }: ISignInBottomSheetProps) {
                     >
                         Acesse a sua conta
                     </AppText>
-
-                    <AppInput placeholder="E-mail" />
-                    <AppInput placeholder="Senha" />
+                    <View style={styles.form}>
+                        <FormGroup label="E-mail">
+                            <AppInput placeholder="Digite seu e-mail" />
+                        </FormGroup>
+                        <FormGroup label="Senha">
+                            <AppInput placeholder="Digite sua senha" />
+                        </FormGroup>
+                    </View>
                 </BottomSheetView>
             </BottomSheetModal>
         </BottomSheetModalProvider>

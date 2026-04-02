@@ -1,11 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-    heading: {
-        letterSpacing: -0.32,
-    },
-
-    form: {
-        gap: 32,
+    container: {
+        gap: 8,
     },
 });
