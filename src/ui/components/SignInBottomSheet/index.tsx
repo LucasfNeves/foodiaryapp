@@ -23,7 +23,7 @@ export function SignInBottomSheet({ ref }: ISignInBottomSheetProps) {
         <BottomSheetModalProvider>
             <BottomSheetModal ref={bottomSheetModalRef}>
                 <BottomSheetView
-                    style={[styles.container, { paddingBottom: bottom }]}
+                    style={[styles.container, { paddingBottom: bottom + 16 }]}
                 >
                     <AppText
                         size="3xl"
