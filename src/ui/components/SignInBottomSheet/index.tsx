@@ -1,6 +1,7 @@
 import {
     BottomSheetModal,
     BottomSheetModalProvider,
+    BottomSheetTextInput,
     BottomSheetView,
 } from '@gorhom/bottom-sheet';
 import { AppText } from '../AppText';
@@ -17,7 +18,8 @@ interface ISignInBottomSheetProps {
 }
 
 export function SignInBottomSheet({ ref }: ISignInBottomSheetProps) {
-    const { bottom, bottomSheetModalRef } = useSignInBottomSheetController(ref);
+    const { bottom, bottomSheetModalRef, passwordInputRef, handleSubmit } =
+        useSignInBottomSheetController(ref);
 
     return (
         <BottomSheetModalProvider>
@@ -34,13 +36,34 @@ export function SignInBottomSheet({ ref }: ISignInBottomSheetProps) {
                     </AppText>
                     <View style={styles.form}>
                         <FormGroup label="E-mail">
-                            <AppInput placeholder="Digite seu e-mail" />
+                            <AppInput
+                                placeholder="Digite seu e-mail"
+                                InputComponent={BottomSheetTextInput}
+                                keyboardType="email-address"
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                autoComplete="email"
+                                returnKeyType="next"
+                                onSubmitEditing={() =>
+                                    passwordInputRef.current?.focus()
+                                }
+                            />
                         </FormGroup>
                         <FormGroup label="Senha">
-                            <AppInput placeholder="Digite sua senha" />
+                            <AppInput
+                                ref={passwordInputRef}
+                                placeholder="Digite sua senha"
+                                InputComponent={BottomSheetTextInput}
+                                secureTextEntry
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                autoComplete="current-password"
+                                returnKeyType="done"
+                                onSubmitEditing={handleSubmit}
+                            />
                         </FormGroup>
 
-                        <AppButton onPress={() => {}}>Entrar</AppButton>
+                        <AppButton onPress={handleSubmit}>Entrar</AppButton>
                     </View>
                 </BottomSheetView>
             </BottomSheetModal>
