@@ -10,9 +10,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SignInBottomSheet } from '@ui/components/SignInBottomSheet';
 import { useRef } from 'react';
 import { ISignInBottomSheet } from '@ui/components/SignInBottomSheet/ISignInBottomSheet';
+import { useNavigation } from '@react-navigation/native';
+import { AuthStackNavigationProps } from '@app/navigation/AuthStack';
 
 export function Greetings() {
     const sigInBottomSheetRef = useRef<ISignInBottomSheet>(null);
+    const navigation = useNavigation<AuthStackNavigationProps>();
 
     return (
         <>
@@ -41,7 +44,11 @@ export function Greetings() {
                     </AppText>
 
                     <View style={styles.ctaContent}>
-                        <AppButton>Criar conta</AppButton>
+                        <AppButton
+                            onPress={() => navigation.navigate('Onboarding')}
+                        >
+                            Criar conta
+                        </AppButton>
 
                         <View style={styles.signInContainer}>
                             <AppText color={theme.colors.white}>
