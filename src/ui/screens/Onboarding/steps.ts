@@ -1,6 +1,6 @@
-import { OnboadrdingStackParamList } from './OnboardingStack';
+import { OnboardingStackParamList } from './OnboardingStack';
 
-export const orderSteps: (keyof OnboadrdingStackParamList)[] = [
+export const orderSteps: (keyof OnboardingStackParamList)[] = [
     'Goal',
     'Gender',
     'BirthDate',

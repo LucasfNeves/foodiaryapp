@@ -1,8 +1,15 @@
 import {
+    createNavigationContainerRef,
+    NavigationContainer,
+    NavigationIndependentTree,
+    RouteProp,
+} from '@react-navigation/native';
+import {
     createNativeStackNavigator,
     NativeStackNavigationProp,
     NativeStackScreenProps,
 } from '@react-navigation/native-stack';
+
 import {
     GoalStep,
     ActivityLevelStep,
@@ -12,14 +19,7 @@ import {
     HeightStep,
     WeightStep,
 } from './steps/index';
-import {
-    createNavigationContainerRef,
-    NavigationContainer,
-    NavigationIndependentTree,
-    RouteProp,
-} from '@react-navigation/native';
-
-export type OnboadrdingStackParamList = {
+export type OnboardingStackParamList = {
     Goal: undefined;
     Gender: undefined;
     BirthDate: undefined;
@@ -29,22 +29,23 @@ export type OnboadrdingStackParamList = {
     CreateAccount: undefined;
 };
 
-export type OnboadrdingStackNavigationProps =
-    NativeStackNavigationProp<OnboadrdingStackParamList>;
+export type OnboardingStackNavigationProps =
+    NativeStackNavigationProp<OnboardingStackParamList>;
 
-export type OnboadrdingStackScreenProps<
-    TRouteName extends keyof OnboadrdingStackParamList,
-> = NativeStackScreenProps<OnboadrdingStackParamList, TRouteName>;
+export type OnboardingStackScreenProps<
+    TRouteName extends keyof OnboardingStackParamList,
+> = NativeStackScreenProps<OnboardingStackParamList, TRouteName>;
 
-export type OnboadrdingStackRouteProps<
-    TRouteName extends keyof OnboadrdingStackParamList,
-> = RouteProp<OnboadrdingStackParamList, TRouteName>;
+export type OnboardingStackRouteProps<
+    TRouteName extends keyof OnboardingStackParamList,
+> = RouteProp<OnboardingStackParamList, TRouteName>;
 
-const Stack = createNativeStackNavigator<OnboadrdingStackParamList>();
+const Stack = createNativeStackNavigator<OnboardingStackParamList>();
+
 export const onboardingNavigation =
-    createNavigationContainerRef<OnboadrdingStackParamList>();
+    createNavigationContainerRef<OnboardingStackParamList>();
 
-export function OnboadrdingStack() {
+export function OnboardingStack() {
     return (
         <NavigationIndependentTree>
             <NavigationContainer ref={onboardingNavigation}>
@@ -52,19 +53,19 @@ export function OnboadrdingStack() {
                     screenOptions={{ headerShown: false }}
                     initialRouteName="Goal"
                 >
-                    <Stack.Screen name="Goal" component={GoalStep} />
-                    <Stack.Screen name="Gender" component={GenderStep} />
-                    <Stack.Screen name="BirthDate" component={BirthDateStep} />
-                    <Stack.Screen name="Height" component={HeightStep} />
-                    <Stack.Screen name="Weight" component={WeightStep} />
                     <Stack.Screen
                         name="ActivityLevel"
                         component={ActivityLevelStep}
                     />
+                    <Stack.Screen name="BirthDate" component={BirthDateStep} />
                     <Stack.Screen
                         name="CreateAccount"
                         component={CreateAccountStep}
                     />
+                    <Stack.Screen name="Gender" component={GenderStep} />
+                    <Stack.Screen name="Goal" component={GoalStep} />
+                    <Stack.Screen name="Height" component={HeightStep} />
+                    <Stack.Screen name="Weight" component={WeightStep} />
                 </Stack.Navigator>
             </NavigationContainer>
         </NavigationIndependentTree>

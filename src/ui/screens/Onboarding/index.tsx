@@ -1,12 +1,20 @@
 import { View } from 'react-native';
-import { OnboadrdingStack } from './OnboardingStack';
+import { OnboardingStack } from './OnboardingStack';
 import { OnboardingProvider } from './context/OnboardingProvider';
+import { OnboardingHeader } from './components/OnboardingHeader';
+import { theme } from '@ui/styles/theme';
 
 export function Onboarding() {
     return (
         <OnboardingProvider>
-            <View style={{ flex: 1 }}>
-                <OnboadrdingStack />
+            <View
+                style={{
+                    flex: 1,
+                    backgroundColor: theme.colors.white,
+                }}
+            >
+                <OnboardingHeader />
+                <OnboardingStack />
             </View>
         </OnboardingProvider>
     );

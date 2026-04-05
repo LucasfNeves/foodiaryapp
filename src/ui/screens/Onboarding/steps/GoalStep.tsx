@@ -1,17 +1,14 @@
 import { View } from 'react-native';
 import { AppText } from '@ui/components/AppText';
 import { AppButton } from '@ui/components/Button';
-import { OnboadrdingStackScreenProps } from '../OnboardingStack';
 
-export function GoalStep({ navigation }: OnboadrdingStackScreenProps<'Goal'>) {
+export function GoalStep() {
     return (
         <View style={{ flex: 1 }}>
             <AppText size="3xl" weight="semiBold">
                 Objetivo
             </AppText>
-            <AppButton onPress={() => navigation.navigate('Gender')}>
-                Próximo
-            </AppButton>
+            <AppButton onPress={() => {}}>Próximo</AppButton>
         </View>
     );
 }
