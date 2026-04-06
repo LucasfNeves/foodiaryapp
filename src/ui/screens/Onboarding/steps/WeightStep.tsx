@@ -29,6 +29,7 @@ export function WeightStep() {
                         placeholder="Ex: 80"
                         keyboardType="numeric"
                         formatter={formatDecimal}
+                        autoFocus
                     />
                 </FormGroup>
             </StepContent>

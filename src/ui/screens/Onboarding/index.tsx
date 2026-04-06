@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { KeyboardAvoidingView, Platform, View } from 'react-native';
 import { OnboardingStack } from './OnboardingStack';
 import { OnboardingProvider } from './context/OnboardingProvider';
 import { OnboardingHeader } from './components/OnboardingHeader';
@@ -7,15 +7,17 @@ import { theme } from '@ui/styles/theme';
 export function Onboarding() {
     return (
         <OnboardingProvider>
-            <View
+            <KeyboardAvoidingView
                 style={{
                     flex: 1,
-                    backgroundColor: theme.colors.white,
                 }}
+                behavior={Platform.OS === 'ios' ? 'padding' : undefined}
             >
-                <OnboardingHeader />
-                <OnboardingStack />
-            </View>
+                <View style={{ flex: 1, backgroundColor: theme.colors.white }}>
+                    <OnboardingHeader />
+                    <OnboardingStack />
+                </View>
+            </KeyboardAvoidingView>
         </OnboardingProvider>
     );
 }

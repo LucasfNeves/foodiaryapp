@@ -28,6 +28,7 @@ export function HeightStep() {
                         placeholder="Ex: 1.75"
                         keyboardType="numeric"
                         formatter={formatDecimal}
+                        autoFocus
                     />
                 </FormGroup>
             </StepContent>
