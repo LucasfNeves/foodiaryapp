@@ -1,19 +1,26 @@
-import { Platform, Pressable, PressableProps } from 'react-native';
+import {
+    ActivityIndicator,
+    Platform,
+    Pressable,
+    PressableProps,
+} from 'react-native';
 import { AppText } from '../AppText';
 import { buttonStyles, ButtonVariants } from './styles';
+import { theme } from '@ui/styles/theme';
 
 type IAppButtonProps = Omit<PressableProps, 'disabled'> &
     Omit<NonNullable<ButtonVariants>, 'disabled'> & {
-        children: React.ReactNode;
-        disabled?: boolean;
+        disabledProp?: boolean;
+        isLoading?: boolean;
     };
 
 export function AppButton({
     children,
     variant,
     size,
-    disabled,
+    disabledProp,
     style,
+    isLoading,
     ...props
 }: IAppButtonProps) {
     const childElement =
@@ -22,6 +29,9 @@ export function AppButton({
         ) : (
             children
         );
+
+    const disabled = disabledProp || isLoading;
+
     return (
         <Pressable
             style={({ pressed }) => [
@@ -37,7 +47,11 @@ export function AppButton({
             android_ripple={{ color: 'rgba(0, 0, 0, 0.1)', borderless: false }}
             {...props}
         >
-            {childElement}
+            {!isLoading ? (
+                childElement
+            ) : (
+                <ActivityIndicator size={24} color={theme.colors.black[700]} />
+            )}
         </Pressable>
     );
 }

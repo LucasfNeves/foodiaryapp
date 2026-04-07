@@ -63,6 +63,7 @@ export function SignInBottomSheet({ ref }: ISignInBottomSheetProps) {
                                         }
                                         value={field.value}
                                         onChangeText={field.onChange}
+                                        disabled={formState.isSubmitting}
                                     />
                                 )}
                             />
@@ -88,12 +89,18 @@ export function SignInBottomSheet({ ref }: ISignInBottomSheetProps) {
                                         onSubmitEditing={handleSubmitForm}
                                         value={field.value}
                                         onChangeText={field.onChange}
+                                        disabled={formState.isSubmitting}
                                     />
                                 )}
                             />
                         </FormGroup>
 
-                        <AppButton onPress={handleSubmitForm}>Entrar</AppButton>
+                        <AppButton
+                            onPress={handleSubmitForm}
+                            isLoading={formState.isSubmitting}
+                        >
+                            Entrar
+                        </AppButton>
                     </View>
                 </BottomSheetView>
             </BottomSheetModal>
