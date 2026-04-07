@@ -26,6 +26,10 @@ export const styles = StyleSheet.create({
         borderColor: theme.colors.lime[700],
         backgroundColor: theme.colors.lime['700/10'],
     },
+    errorItem: {
+        borderColor: theme.colors.support.red,
+        backgroundColor: theme.colors.support['red/10'],
+    },
     icon: {
         backgroundColor: theme.colors.gray[200],
         borderRadius: 12,
@@ -33,6 +37,9 @@ export const styles = StyleSheet.create({
         height: 48,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    errorIcon: {
+        backgroundColor: theme.colors.support['red/10'],
     },
     selectedIcon: {
         backgroundColor: theme.colors['white/40'],

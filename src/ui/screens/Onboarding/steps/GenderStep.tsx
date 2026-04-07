@@ -16,14 +16,20 @@ import {
 import { ArrowRightIcon } from 'lucide-react-native';
 import { theme } from '@ui/styles/theme';
 import { useOnboarding } from '../context/useOnboarding';
-
-export enum Gender {
-    MALE = 'male',
-    FEMALE = 'female',
-}
+import { Gender } from '@app/types/Gender';
+import { Controller, useFormContext } from 'react-hook-form';
+import { OnboardingSchema } from '../schema';
 
 export function GenderStep() {
     const { goToNextStep } = useOnboarding();
+    const form = useFormContext<OnboardingSchema>();
+
+    async function handleNextStep() {
+        const isValid = await form.trigger('gender');
+        if (isValid) {
+            goToNextStep();
+        }
+    }
 
     return (
         <Step>
@@ -34,19 +40,30 @@ export function GenderStep() {
                 </StepSubtitle>
             </StepHeader>
             <StepContent>
-                <RadioGroup orientation="horizontal" initialValue={Gender.MALE}>
-                    <RadioGroupItem value={Gender.MALE}>
-                        <RadioGroupIcon>🧔‍♂️</RadioGroupIcon>
-                        <RadioGroupLabel>Masculino</RadioGroupLabel>
-                    </RadioGroupItem>
-                    <RadioGroupItem value={Gender.FEMALE}>
-                        <RadioGroupIcon>👩</RadioGroupIcon>
-                        <RadioGroupLabel>Feminino</RadioGroupLabel>
-                    </RadioGroupItem>
-                </RadioGroup>
+                <Controller
+                    name="gender"
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                        <RadioGroup
+                            orientation="horizontal"
+                            value={field.value}
+                            onChangeValue={field.onChange}
+                            error={!!fieldState.error && !fieldState.isDirty}
+                        >
+                            <RadioGroupItem value={Gender.MALE}>
+                                <RadioGroupIcon>🧔‍♂️</RadioGroupIcon>
+                                <RadioGroupLabel>Masculino</RadioGroupLabel>
+                            </RadioGroupItem>
+                            <RadioGroupItem value={Gender.FEMALE}>
+                                <RadioGroupIcon>👩</RadioGroupIcon>
+                                <RadioGroupLabel>Feminino</RadioGroupLabel>
+                            </RadioGroupItem>
+                        </RadioGroup>
+                    )}
+                />
             </StepContent>
             <StepFooter>
-                <AppButton size="icon" onPress={goToNextStep}>
+                <AppButton size="icon" onPress={handleNextStep}>
                     <ArrowRightIcon size={20} color={theme.colors.black[700]} />
                 </AppButton>
             </StepFooter>

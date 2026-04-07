@@ -1,7 +1,7 @@
 import { TouchableOpacity, View } from 'react-native';
 import { styles } from './styles';
 import { AppText } from '../AppText';
-import { createContext, use, useState } from 'react';
+import { createContext, use } from 'react';
 
 interface IRadioGroupItemProps {
     value: string;
@@ -10,33 +10,34 @@ interface IRadioGroupItemProps {
 
 interface IRadioGroupContextValue {
     value: string | null;
-    onValueChange: (value: string | null) => void;
+    onChangeValue: (value: string) => void;
     isHorizontal: boolean;
+    error?: boolean;
 }
 
 const RadioGroupContext = createContext({} as IRadioGroupContextValue);
 
 interface IRadioGroupProps {
     children: React.ReactNode;
-    initialValue?: string;
     orientation?: 'horizontal' | 'vertical';
+    value: string | null;
+    onChangeValue: (value: string) => void;
+    error: boolean;
 }
 
 export function RadioGroup({
     children,
-    initialValue,
     orientation = 'vertical',
+    value,
+    onChangeValue,
+    error = false,
 }: IRadioGroupProps) {
-    const [value, setValue] = useState<string | null>(initialValue ?? null);
-
     const isHorizontal = orientation === 'horizontal';
 
-    function onValueChange(newValue: string | null) {
-        setValue(newValue);
-    }
-
     return (
-        <RadioGroupContext value={{ value, onValueChange, isHorizontal }}>
+        <RadioGroupContext
+            value={{ value, onChangeValue, isHorizontal, error }}
+        >
             <View
                 style={[
                     styles.container,
@@ -54,8 +55,9 @@ const RadioGroupItemContext = createContext({ isSelected: false });
 export function RadioGroupItem({ children, value }: IRadioGroupItemProps) {
     const {
         value: selectedValue,
-        onValueChange,
+        onChangeValue,
         isHorizontal,
+        error,
     } = use(RadioGroupContext);
 
     const isSelected = selectedValue === value;
@@ -63,11 +65,12 @@ export function RadioGroupItem({ children, value }: IRadioGroupItemProps) {
     return (
         <RadioGroupItemContext.Provider value={{ isSelected }}>
             <TouchableOpacity
-                onPress={() => onValueChange(value)}
+                onPress={() => onChangeValue(value)}
                 style={[
                     styles.item,
                     isHorizontal && styles.horizontalItem,
                     isSelected && styles.selectedItem,
+                    error && styles.errorItem,
                 ]}
             >
                 {children}
@@ -78,9 +81,16 @@ export function RadioGroupItem({ children, value }: IRadioGroupItemProps) {
 
 export function RadioGroupIcon({ children }: { children: string }) {
     const { isSelected } = use(RadioGroupItemContext);
+    const { error } = use(RadioGroupContext);
 
     return (
-        <View style={[styles.icon, isSelected && styles.selectedIcon]}>
+        <View
+            style={[
+                styles.icon,
+                isSelected && styles.selectedIcon,
+                error && styles.errorIcon,
+            ]}
+        >
             <AppText>{children}</AppText>
         </View>
     );
