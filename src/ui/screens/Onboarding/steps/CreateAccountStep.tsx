@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { TextInput, View } from 'react-native';
+import { Alert, TextInput, View } from 'react-native';
 import {
     Step,
     StepContent,
@@ -13,6 +13,8 @@ import { AppInput } from '@ui/components/AppInput';
 import { FormGroup } from '@ui/components/FormGroup';
 import { Controller, useFormContext } from 'react-hook-form';
 import { OnboardingSchema } from '../schema';
+import { AuthService } from '@app/services/AuthService';
+import { isAxiosError } from 'axios';
 
 export function CreateAccountStep() {
     const form = useFormContext<OnboardingSchema>();
@@ -20,8 +22,45 @@ export function CreateAccountStep() {
     const passwordInputRef = useRef<TextInput>(null);
     const confirmPasswordInputRef = useRef<TextInput>(null);
 
-    const handleSubmit = form.handleSubmit((formData) => {
-        console.log(formData);
+    const handleSubmit = form.handleSubmit(async (formData) => {
+        const birthDate = formData.birthDate.toISOString().split('T')[0];
+
+        try {
+            const response = await AuthService.signUp({
+                account: {
+                    email: formData.account.email,
+                    password: formData.account.password,
+                },
+                profile: {
+                    name: formData.account.name,
+                    activityLevel: formData.activityLevel,
+                    birthDate,
+                    gender: formData.gender,
+                    goal: formData.goal,
+                    height: Number(formData.height),
+                    weight: Number(formData.weight),
+                },
+            });
+
+            console.log('Conta criada com sucesso:', response);
+        } catch (error) {
+            if (
+                isAxiosError(error) &&
+                error.response?.data?.error?.ErrorCode.EMAIL_ALREADY_IN_USE
+            ) {
+                Alert.alert(
+                    'Erro',
+                    'O email informado já está em uso. Tente novamente.',
+                );
+
+                return;
+            }
+
+            Alert.alert(
+                'Erro',
+                'Ocorreu um erro ao criar a conta. Tente novamente.',
+            );
+        }
     });
 
     return (
@@ -51,6 +90,7 @@ export function CreateAccountStep() {
                                     onSubmitEditing={() =>
                                         emailInputRef.current?.focus()
                                     }
+                                    disabled={form.formState.isSubmitting}
                                     autoFocus
                                 />
                             )}
@@ -77,6 +117,7 @@ export function CreateAccountStep() {
                                     onSubmitEditing={() =>
                                         passwordInputRef.current?.focus()
                                     }
+                                    disabled={form.formState.isSubmitting}
                                 />
                             )}
                         />
@@ -102,6 +143,7 @@ export function CreateAccountStep() {
                                     onSubmitEditing={() =>
                                         confirmPasswordInputRef.current?.focus()
                                     }
+                                    disabled={form.formState.isSubmitting}
                                 />
                             )}
                         />
@@ -128,6 +170,7 @@ export function CreateAccountStep() {
                                     value={field.value}
                                     onChangeText={field.onChange}
                                     onSubmitEditing={handleSubmit}
+                                    disabled={form.formState.isSubmitting}
                                 />
                             )}
                         />
@@ -135,7 +178,11 @@ export function CreateAccountStep() {
                 </View>
             </StepContent>
             <StepFooter>
-                <AppButton onPress={handleSubmit} style={{ width: '100%' }}>
+                <AppButton
+                    onPress={handleSubmit}
+                    style={{ width: '100%' }}
+                    isLoading={form.formState.isSubmitting}
+                >
                     Criar conta
                 </AppButton>
             </StepFooter>

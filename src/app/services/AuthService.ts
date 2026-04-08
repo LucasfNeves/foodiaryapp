@@ -43,7 +43,7 @@ export namespace AuthService {
         };
         profile: {
             name: string;
-            birthDate: Date;
+            birthDate: string;
             gender: Gender;
             goal: Goal;
             height: number;
