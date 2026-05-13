@@ -6,13 +6,14 @@ import { Alert, TextInput } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { sigInSchema, SignInSchema } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AuthService } from '@app/services/AuthService';
+import { useAuthContext } from '@app/context/AuthContext/useAuthContext';
 
 export function useSignInBottomSheetController(
     ref: React.Ref<ISignInBottomSheet>,
 ) {
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
     const { bottom } = useSafeAreaInsets();
+    const { signIn } = useAuthContext();
 
     const { handleSubmit, control, formState } = useForm<SignInSchema>({
         resolver: zodResolver(sigInSchema),
@@ -25,11 +26,7 @@ export function useSignInBottomSheetController(
 
     const handleSubmitForm = handleSubmit(async (data) => {
         try {
-            const { accessToken, refreshToken } =
-                await AuthService.signIn(data);
-
-            console.log('Access Token:', accessToken);
-            console.log('Refresh Token:', refreshToken);
+            await signIn(data);
         } catch {
             Alert.alert(
                 'Oops!',

@@ -5,7 +5,6 @@
         "paths": {
             "@ui/*": ["./src/ui/*"],
             "@app/*": ["./src/app/*"]
-        },
-        "baseUrl": "."
+        }
     }
 }

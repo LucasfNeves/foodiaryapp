@@ -13,8 +13,8 @@ import { AppInput } from '@ui/components/AppInput';
 import { FormGroup } from '@ui/components/FormGroup';
 import { Controller, useFormContext } from 'react-hook-form';
 import { OnboardingSchema } from '../schema';
-import { AuthService } from '@app/services/AuthService';
 import { isAxiosError } from 'axios';
+import { useAuthContext } from '@app/context/AuthContext/useAuthContext';
 
 export function CreateAccountStep() {
     const form = useFormContext<OnboardingSchema>();
@@ -22,11 +22,13 @@ export function CreateAccountStep() {
     const passwordInputRef = useRef<TextInput>(null);
     const confirmPasswordInputRef = useRef<TextInput>(null);
 
+    const { signUp } = useAuthContext();
+
     const handleSubmit = form.handleSubmit(async (formData) => {
         const birthDate = formData.birthDate.toISOString().split('T')[0];
 
         try {
-            const response = await AuthService.signUp({
+            const response = await signUp({
                 account: {
                     email: formData.account.email,
                     password: formData.account.password,
@@ -42,7 +44,7 @@ export function CreateAccountStep() {
                 },
             });
 
-            console.log('Conta criada com sucesso:', response);
+            console.log('Sign Up Response:', response);
         } catch (error) {
             if (
                 isAxiosError(error) &&
