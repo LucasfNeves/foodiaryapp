@@ -23,6 +23,16 @@ export class AuthService extends Service {
         );
         return data;
     }
+
+    static async refresh(
+        payload: AuthService.refreshPayload,
+    ): Promise<AuthService.refreshResponse> {
+        const { data } = await this.apiClient.post<AuthService.SignUpResponse>(
+            '/auth/refresh-token',
+            payload,
+        );
+        return data;
+    }
 }
 
 export namespace AuthService {
@@ -53,6 +63,15 @@ export namespace AuthService {
     };
 
     export type SignUpResponse = {
+        accessToken: string;
+        refreshToken: string;
+    };
+
+    export type refreshPayload = {
+        refreshToken: string;
+    };
+
+    export type refreshResponse = {
         accessToken: string;
         refreshToken: string;
     };

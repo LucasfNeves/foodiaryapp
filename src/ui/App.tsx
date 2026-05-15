@@ -7,6 +7,9 @@ import {
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Navigation } from '@app/navigation';
+import { AuthProvider } from '@app/context/AuthContext/AuthProvider';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from '@app/lib/queryClient';
 
 export default function App() {
     const [isFontsLoaded] = useFonts({
@@ -22,7 +25,11 @@ export default function App() {
     return (
         <GestureHandlerRootView>
             <SafeAreaProvider>
-                <Navigation />
+                <QueryClientProvider client={queryClient}>
+                    <AuthProvider>
+                        <Navigation />
+                    </AuthProvider>
+                </QueryClientProvider>
             </SafeAreaProvider>
         </GestureHandlerRootView>
     );

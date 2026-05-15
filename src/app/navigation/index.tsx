@@ -1,15 +1,10 @@
-import {
-    createNavigationContainerRef,
-    NavigationContainer,
-} from '@react-navigation/native';
-import { AuthStack, AuthStackParamList } from './AuthStack';
-
-export const rootStack = createNavigationContainerRef<AuthStackParamList>();
+import { NavigationContainer } from '@react-navigation/native';
+import { RootStack } from './RootStack';
 
 export function Navigation() {
     return (
-        <NavigationContainer ref={rootStack}>
-            <AuthStack />
+        <NavigationContainer>
+            <RootStack />
         </NavigationContainer>
     );
 }
