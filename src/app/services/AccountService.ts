@@ -1,5 +1,6 @@
 import { Gender } from '@app/types/Gender';
 import { Service } from './Service';
+import { Goal } from '@app/types/Goal';
 
 export class AccountService extends Service {
     static async getMe(): Promise<AccountService.GetMeResponse> {
@@ -23,6 +24,7 @@ export namespace AccountService {
             gender: Gender;
             height: number;
             weight: number;
+            goal: Goal;
         };
 
         goal: {

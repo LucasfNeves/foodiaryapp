@@ -18,6 +18,7 @@ interface ISetupAuthParams {
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const { account, refetchAccount } = useAccount();
     const [isReady, setIsReady] = useState(false);
+    const [signedUp, setSignedUp] = useState(false);
     const queryClient = useQueryClient();
     const forceRender = useForceRender();
 
@@ -97,6 +98,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             acessToken: tokens.accessToken,
             refreshToken: tokens.refreshToken,
         });
+
+        setSignedUp(true);
     }, []);
 
     if (!isReady) {
@@ -107,6 +110,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         <AuthContext
             value={{
                 signedIn: !!account,
+                signedUp,
                 signIn,
                 signUp,
                 signOut,

@@ -28,7 +28,7 @@ export function RootStack() {
     const { signedIn } = useAuthContext();
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-            {!signedIn && (
+            {signedIn && (
                 <Stack.Screen
                     name="Auth"
                     component={AuthStack}
@@ -37,7 +37,7 @@ export function RootStack() {
                     }}
                 />
             )}
-            {signedIn && (
+            {!signedIn && (
                 <Stack.Screen
                     name="App"
                     component={AppStack}

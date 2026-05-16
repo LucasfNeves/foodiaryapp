@@ -1,16 +1,19 @@
-import { useAuthContext } from '@app/context/AuthContext/useAuthContext';
+import { WelcomeModal } from '@ui/components/WelcomeModal';
+import { FlatList, View } from 'react-native';
+import { styles } from './styles';
 import { AppText } from '@ui/components/AppText';
-import { AppButton } from '@ui/components/Button';
-import { View } from 'react-native';
+import { Header } from './components/Header';
 
 export function Home() {
-    const { signOut } = useAuthContext();
     return (
-        <View
-            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-        >
-            <AppText>Home</AppText>
-            <AppButton onPress={signOut}>Sair</AppButton>
+        <View style={styles.container}>
+            <WelcomeModal />
+
+            <FlatList
+                data={[1, 2, 3, 4, 5]}
+                ListHeaderComponent={Header}
+                renderItem={({ item }) => <AppText>Item {item}</AppText>}
+            />
         </View>
     );
 }

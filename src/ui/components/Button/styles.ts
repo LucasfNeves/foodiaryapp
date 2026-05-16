@@ -1,5 +1,14 @@
 import { theme } from '@ui/styles/theme';
 import { createVariants, VariantProps } from '@ui/styles/utils/createVariants';
+import { StyleSheet } from 'react-native';
+
+export const styles = StyleSheet.create({
+    content: {
+        flexDirection: 'row',
+        gap: 10,
+        alignItems: 'center',
+    },
+});
 
 export const buttonStyles = createVariants({
     base: {

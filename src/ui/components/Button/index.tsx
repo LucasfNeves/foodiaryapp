@@ -3,15 +3,18 @@ import {
     Platform,
     Pressable,
     PressableProps,
+    View,
 } from 'react-native';
 import { AppText } from '../AppText';
-import { buttonStyles, ButtonVariants } from './styles';
+import { buttonStyles, ButtonVariants, styles } from './styles';
 import { theme } from '@ui/styles/theme';
+import { LucideIcon } from 'lucide-react-native';
 
 type IAppButtonProps = Omit<PressableProps, 'disabled'> &
     Omit<NonNullable<ButtonVariants>, 'disabled'> & {
         disabledProp?: boolean;
         isLoading?: boolean;
+        leftIcon?: LucideIcon;
     };
 
 export function AppButton({
@@ -21,6 +24,7 @@ export function AppButton({
     disabledProp,
     style,
     isLoading,
+    leftIcon: LeftIcon,
     ...props
 }: IAppButtonProps) {
     const childElement =
@@ -48,7 +52,12 @@ export function AppButton({
             {...props}
         >
             {!isLoading ? (
-                childElement
+                <View style={styles.content}>
+                    {LeftIcon && (
+                        <LeftIcon color={theme.colors.black[700]} size={20} />
+                    )}
+                    {childElement as React.ReactNode}
+                </View>
             ) : (
                 <ActivityIndicator size={24} color={theme.colors.black[700]} />
             )}
