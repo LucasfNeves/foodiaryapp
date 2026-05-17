@@ -1,12 +1,24 @@
 import { View } from 'react-native';
 import { UserHeader } from '../UserHeader';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { DateSwitcher } from '../DateSwitcher';
+import { styles } from './styles';
+import { CurrentGoal } from '../CurrentGoal';
+import { AppText } from '@ui/components/AppText';
 
 export function Header() {
-    const { top } = useSafeAreaInsets();
     return (
-        <View style={{ paddingTop: top, flex: 1 }}>
+        <View>
             <UserHeader />
+
+            <View style={styles.container}>
+                <DateSwitcher />
+                <CurrentGoal />
+
+                <View style={styles.divider} />
+                <AppText weight="medium" style={styles.mealsLabel}>
+                    REFEIÇÕES
+                </AppText>
+            </View>
         </View>
     );
 }
