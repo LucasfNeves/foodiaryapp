@@ -5,12 +5,18 @@ import React from 'react';
 import { View } from 'react-native';
 import { styles } from './styles';
 import { theme } from '@ui/styles/theme';
+import { useHomeContext } from '../../context/useHomeContext';
 
 export function DateSwitcher() {
-    const date = new Date();
+    const { date, previousDate, nextDate, isLoading } = useHomeContext();
     return (
-        <View style={styles.container}>
-            <AppButton size="icon" variant="ghost">
+        <View style={[styles.container, isLoading && { opacity: 0.5 }]}>
+            <AppButton
+                size="icon"
+                variant="ghost"
+                onPress={previousDate}
+                disabledProp={isLoading}
+            >
                 <ChevronLeftIcon color="#000" size={20} />
             </AppButton>
 
@@ -22,7 +28,12 @@ export function DateSwitcher() {
                 {formatDate(date)}
             </AppText>
 
-            <AppButton size="icon" variant="ghost">
+            <AppButton
+                size="icon"
+                variant="ghost"
+                onPress={nextDate}
+                disabledProp={isLoading}
+            >
                 <ChevronRightIcon color="#000" size={20} />
             </AppButton>
         </View>

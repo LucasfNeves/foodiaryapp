@@ -4,12 +4,18 @@ import { AppText } from '@ui/components/AppText';
 import { CameraIcon, LucideIcon, MicIcon } from 'lucide-react-native';
 import { theme } from '@ui/styles/theme';
 
-export function CreateMealOptions() {
+interface ICreateMealOptionsProps {
+    disabled?: boolean;
+}
+
+export function CreateMealOptions({
+    disabled = false,
+}: ICreateMealOptionsProps) {
     return (
         <View style={styles.container}>
-            <OptionButton icon={MicIcon} label="Áudio" />
+            <OptionButton icon={MicIcon} label="Áudio" disabled={disabled} />
 
-            <OptionButton icon={CameraIcon} label="Foto" />
+            <OptionButton icon={CameraIcon} label="Foto" disabled={disabled} />
         </View>
     );
 }
@@ -17,15 +23,21 @@ export function CreateMealOptions() {
 interface IOptionButtonProps {
     icon: LucideIcon;
     label: string;
+    disabled?: boolean;
 }
 
-export function OptionButton({ icon: Icon, label }: IOptionButtonProps) {
+export function OptionButton({
+    icon: Icon,
+    label,
+    disabled = false,
+}: IOptionButtonProps) {
     return (
         <View style={styles.buttonWrapper}>
             <Pressable
                 style={({ pressed }) => [
                     styles.button,
                     pressed && Platform.OS === 'ios' && { opacity: 0.7 },
+                    disabled && { opacity: 0.5 },
                 ]}
                 android_ripple={{
                     color: 'rgba(0, 0, 0, 0.1)',
