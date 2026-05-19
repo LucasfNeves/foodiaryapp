@@ -41,7 +41,7 @@ export function OptionButton({
                 ]}
                 android_ripple={{
                     color: 'rgba(0, 0, 0, 0.1)',
-                    borderless: false,
+                    foreground: true,
                 }}
             >
                 <View style={styles.icon}>

@@ -3,7 +3,6 @@ import { View } from 'react-native';
 import { styles } from './styles';
 import { GoalStats } from '@ui/components/GoalSteps';
 import { useAccount } from '@app/hooks/queries/useAccount';
-import { Meal } from '@app/types/Meal';
 import { useHomeContext } from '../../context/useHomeContext';
 
 export function CurrentGoal() {

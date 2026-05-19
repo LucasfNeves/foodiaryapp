@@ -48,7 +48,7 @@ export function AppButton({
                 typeof style === 'function' ? style({ pressed }) : style,
             ]}
             disabled={disabled}
-            android_ripple={{ color: 'rgba(0, 0, 0, 0.1)', borderless: false }}
+            android_ripple={{ color: 'rgba(0, 0, 0, 0.1)', foreground: true }}
             {...props}
         >
             {!isLoading ? (

@@ -43,7 +43,7 @@ export function MealCard({ meal }: IMealCardProps) {
                     ]}
                     android_ripple={{
                         color: 'rgba(0, 0, 0, 0.1)',
-                        borderless: false,
+                        foreground: true,
                     }}
                 >
                     <View style={styles.header}>

@@ -8,7 +8,8 @@ import { MealCard } from './components/MealCard';
 import { ItemSeparatorComponent } from './components/ItemSepaeratorComponent';
 import { FullScreenLoader } from './components/FullScreenLoader';
 import { useHomeController } from './useHomeController';
-import { HomeContext } from './context';
+import { Fab } from './components/Fab';
+import { HomeProvider } from './context/HeaderProvider';
 
 export function Home() {
     const {
@@ -32,8 +33,12 @@ export function Home() {
         <View style={[styles.container, { paddingTop: top }]}>
             <WelcomeModal />
 
-            <HomeContext
-                value={{ date, previousDate, nextDate, meals, isLoading }}
+            <HomeProvider
+                date={date}
+                isLoading={isLoading}
+                meals={meals}
+                nextDate={nextDate}
+                previousDate={previousDate}
             >
                 <FlatList
                     style={{ flex: 1 }}
@@ -55,7 +60,8 @@ export function Home() {
                     ItemSeparatorComponent={ItemSeparatorComponent}
                     renderItem={({ item: meal }) => <MealCard meal={meal} />}
                 />
-            </HomeContext>
+            </HomeProvider>
+            {meals.length > 0 && <Fab />}
         </View>
     );
 }
