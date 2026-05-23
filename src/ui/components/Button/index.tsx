@@ -15,6 +15,7 @@ type IAppButtonProps = Omit<PressableProps, 'disabled'> &
         disabledProp?: boolean;
         isLoading?: boolean;
         leftIcon?: LucideIcon;
+        rippleStyle?: 'light' | 'dark';
     };
 
 export function AppButton({
@@ -25,6 +26,7 @@ export function AppButton({
     style,
     isLoading,
     leftIcon: LeftIcon,
+    rippleStyle = 'dark',
     ...props
 }: IAppButtonProps) {
     const childElement =
@@ -48,7 +50,13 @@ export function AppButton({
                 typeof style === 'function' ? style({ pressed }) : style,
             ]}
             disabled={disabled}
-            android_ripple={{ color: 'rgba(0, 0, 0, 0.1)', foreground: true }}
+            android_ripple={{
+                color:
+                    rippleStyle === 'dark'
+                        ? 'rgba(0, 0, 0, 0.1)'
+                        : 'rgba(255, 255, 255, 0.1)',
+                foreground: true,
+            }}
             {...props}
         >
             {!isLoading ? (
