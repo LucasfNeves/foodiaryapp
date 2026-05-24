@@ -5,6 +5,7 @@ import { CameraIcon, LucideIcon, MicIcon } from 'lucide-react-native';
 import { theme } from '@ui/styles/theme';
 import { AudioModal } from '../AudioModal';
 import { useState } from 'react';
+import { PictureModal } from '../PictureModal';
 
 interface ICreateMealOptionsProps {
     disabled?: boolean;
@@ -31,6 +32,12 @@ export function CreateMealOptions({
                 visible={currentVisibleModal === 'audio'}
                 onClose={handleCloseModal}
             />
+
+            <PictureModal
+                visible={currentVisibleModal === 'picture'}
+                onClose={handleCloseModal}
+            />
+
             <OptionButton
                 icon={MicIcon}
                 label="Áudio"

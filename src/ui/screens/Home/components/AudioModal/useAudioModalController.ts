@@ -48,6 +48,11 @@ export function useAudioModalController() {
         setState('recorded');
     }
 
+    async function handleTryAgain() {
+        setAudioUri(null);
+        setState('idle');
+    }
+
     const isRecording = state === 'recording';
 
     return {
@@ -57,6 +62,7 @@ export function useAudioModalController() {
         isRecording,
         handleStartRecording,
         handleStopRecording,
+        handleTryAgain,
         audioUri,
     };
 }

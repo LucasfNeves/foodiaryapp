@@ -21,6 +21,7 @@ export function AudioModal({ visible, onClose }: IAudioModalProps) {
         isRecording,
         handleStartRecording,
         handleStopRecording,
+        handleTryAgain,
         isLoading,
         audioUri,
     } = useAudioModalController();
@@ -94,6 +95,7 @@ export function AudioModal({ visible, onClose }: IAudioModalProps) {
                                         state={state}
                                         onStartRecording={handleStartRecording}
                                         onStopRecording={handleStopRecording}
+                                        onTryAgain={handleTryAgain}
                                         audioUri={audioUri}
                                     />
                                 </View>

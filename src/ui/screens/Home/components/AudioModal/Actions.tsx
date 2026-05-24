@@ -12,6 +12,7 @@ interface IActionsProps {
     state: AudioModalState;
     onStartRecording: () => void;
     onStopRecording?: () => void;
+    onTryAgain?: () => void;
     audioUri: string | null;
 }
 
@@ -20,8 +21,22 @@ export function Actions({
     onStartRecording,
     onStopRecording,
     audioUri,
+    onTryAgain,
 }: IActionsProps) {
     const [recordingTimeInSeconds, setRecordingTimeInSeconds] = useState(0);
+
+    useEffect(() => {
+        const MAX_RECORDING_DURATION_IN_SECONDS = 60;
+
+        if (recordingTimeInSeconds >= MAX_RECORDING_DURATION_IN_SECONDS) {
+            onStopRecording?.();
+        }
+    }, [recordingTimeInSeconds, onStopRecording]);
+
+    function onTryAgainDecorator() {
+        setRecordingTimeInSeconds(0);
+        onTryAgain?.();
+    }
 
     useEffect(() => {
         if (state !== 'recording') {
@@ -86,7 +101,9 @@ export function Actions({
     }
 
     if (state === 'recorded' && audioUri) {
-        return <AudioPlayer audioUri={audioUri} />;
+        return (
+            <AudioPlayer audioUri={audioUri} onTryAgain={onTryAgainDecorator} />
+        );
     }
 
     return null;

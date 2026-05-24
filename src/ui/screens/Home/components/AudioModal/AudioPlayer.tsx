@@ -14,9 +14,10 @@ import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
 
 interface IAudioPlayerProps {
     audioUri: string;
+    onTryAgain?: () => void;
 }
 
-export function AudioPlayer({ audioUri }: IAudioPlayerProps) {
+export function AudioPlayer({ audioUri, onTryAgain }: IAudioPlayerProps) {
     const player = useAudioPlayer(audioUri);
     const { duration, currentTime, playing } = useAudioPlayerStatus(player);
 
@@ -34,7 +35,12 @@ export function AudioPlayer({ audioUri }: IAudioPlayerProps) {
     return (
         <>
             <View style={styles.actionsGroup}>
-                <AppButton size="icon" variant="neutral" rippleStyle="light">
+                <AppButton
+                    size="icon"
+                    variant="neutral"
+                    rippleStyle="light"
+                    onPress={onTryAgain}
+                >
                     <Trash2Icon color={theme.colors.gray[500]} size={20} />
                 </AppButton>
 
