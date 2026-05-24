@@ -8,6 +8,7 @@ import { theme } from '@ui/styles/theme';
 import { AppText } from '@ui/components/AppText';
 import { useAudioModalController } from './useAudioModalController';
 import { Actions } from './Actions';
+import { CreateMealLoader } from '@ui/components/CreateMealLoader';
 
 interface IAudioModalProps {
     visible: boolean;
@@ -15,8 +16,14 @@ interface IAudioModalProps {
 }
 
 export function AudioModal({ visible, onClose }: IAudioModalProps) {
-    const { state, isRecording, handleStartRecording } =
-        useAudioModalController();
+    const {
+        state,
+        isRecording,
+        handleStartRecording,
+        handleStopRecording,
+        isLoading,
+        audioUri,
+    } = useAudioModalController();
 
     return (
         <Modal
@@ -27,67 +34,74 @@ export function AudioModal({ visible, onClose }: IAudioModalProps) {
             statusBarTranslucent
         >
             <StatusBar animated translucent style="light" />
-            <View style={styles.container}>
-                <SafeAreaProvider>
-                    <SafeAreaView style={styles.content}>
-                        <View style={styles.header}>
-                            <AppButton
-                                size="icon"
-                                variant="neutral"
-                                onPress={onClose}
-                                rippleStyle="light"
-                            >
-                                <XIcon
-                                    color={theme.colors.gray[500]}
-                                    size={20}
-                                />
-                            </AppButton>
-                        </View>
+            {isLoading && <CreateMealLoader type="audio" />}
 
-                        <View style={styles.body}>
-                            <View
-                                style={[
-                                    styles.circle1,
-                                    isRecording && styles.circle1Recording,
-                                ]}
-                            >
+            {!isLoading && (
+                <View style={styles.container}>
+                    <SafeAreaProvider>
+                        <SafeAreaView style={styles.content}>
+                            <View style={styles.header}>
+                                <AppButton
+                                    size="icon"
+                                    variant="neutral"
+                                    onPress={onClose}
+                                    rippleStyle="light"
+                                >
+                                    <XIcon
+                                        color={theme.colors.gray[500]}
+                                        size={20}
+                                    />
+                                </AppButton>
+                            </View>
+
+                            <View style={styles.body}>
                                 <View
                                     style={[
-                                        styles.circle2,
-                                        isRecording && styles.circle2Recording,
+                                        styles.circle1,
+                                        isRecording && styles.circle1Recording,
                                     ]}
                                 >
                                     <View
                                         style={[
-                                            styles.circle3,
+                                            styles.circle2,
                                             isRecording &&
-                                                styles.circle3Recording,
+                                                styles.circle2Recording,
                                         ]}
-                                    ></View>
+                                    >
+                                        <View
+                                            style={[
+                                                styles.circle3,
+                                                isRecording &&
+                                                    styles.circle3Recording,
+                                            ]}
+                                        ></View>
+                                    </View>
+                                </View>
+
+                                <AppText
+                                    color={theme.colors.gray[500]}
+                                    align="center"
+                                    style={styles.instructionLabel}
+                                >
+                                    Tente dizer algo como: 100g de Arroz, 2 Ovos
+                                    e 100g de Salada
+                                </AppText>
+                            </View>
+
+                            <View style={styles.footer}>
+                                <View style={styles.actionsContainer}>
+                                    <Actions
+                                        state={state}
+                                        onStartRecording={handleStartRecording}
+                                        onStopRecording={handleStopRecording}
+                                        audioUri={audioUri}
+                                    />
                                 </View>
                             </View>
-
-                            <AppText
-                                color={theme.colors.gray[500]}
-                                align="center"
-                                style={styles.instructionLabel}
-                            >
-                                Tente dizer algo como: 100g de Arroz, 2 Ovos e
-                                100g de Salada
-                            </AppText>
-                        </View>
-
-                        <View style={styles.footer}>
-                            <View style={styles.actionsContainer}>
-                                <Actions
-                                    state={state}
-                                    onStartRecording={handleStartRecording}
-                                />
-                            </View>
-                        </View>
-                    </SafeAreaView>
-                </SafeAreaProvider>
-            </View>
+                        </SafeAreaView>
+                    </SafeAreaProvider>
+                </View>
+            )}
         </Modal>
     );
 }
