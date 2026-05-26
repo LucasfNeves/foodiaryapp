@@ -3,11 +3,11 @@ import { Platform, Pressable, View } from 'react-native';
 import { styles } from './styles';
 import { AppText } from '@ui/components/AppText';
 import { theme } from '@ui/styles/theme';
-import { Meal } from '@app/types/Meal';
+import { SimplifiedMeal } from '@app/types/Meal';
 import { useHomeContext } from '../../context/useHomeContext';
 
 interface IMealCardProps {
-    meal: Meal;
+    meal: SimplifiedMeal;
 }
 
 export function MealCard({ meal }: IMealCardProps) {

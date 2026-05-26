@@ -7,9 +7,10 @@ import {
 import { Home } from '@ui/screens/Home';
 
 export type AppStackParamList = {
-    Greetings: undefined;
-    Onboarding: undefined;
     Home: undefined;
+    MealDetails: {
+        mealId: string;
+    };
 };
 
 export type AppStackNavigationProps =
@@ -27,6 +28,7 @@ export function AppStack() {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="MealDetails" component={Home} />
         </Stack.Navigator>
     );
 }
