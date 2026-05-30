@@ -50,12 +50,15 @@ export const styles = StyleSheet.create({
         gap: 8,
         padding: 20,
     },
+    macrosProgressContainer: {
+        marginTop: 4,
+        marginHorizontal: 20,
+    },
 
     macroProgress: {
         height: 4,
         flexDirection: 'row',
         marginTop: 4,
-        marginHorizontal: 20,
     },
     proteinProgress: {
         backgroundColor: theme.colors.support.teal,
@@ -80,6 +83,9 @@ export const styles = StyleSheet.create({
     },
     mealName: {
         letterSpacing: -0.24,
+    },
+
+    mealNameContainer: {
         margin: 20,
         marginBottom: 24,
     },

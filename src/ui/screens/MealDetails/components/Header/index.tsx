@@ -11,12 +11,14 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
 import { Meal, MealInputType } from '@app/types/Meal';
 import { useMemo } from 'react';
+import { Skeleton } from 'moti/skeleton';
 
 interface IHeaderProps {
     meal?: Meal | null;
+    isLoading?: boolean;
 }
 
-export function Header({ meal }: IHeaderProps) {
+export function Header({ meal, isLoading }: IHeaderProps) {
     const { top } = useSafeAreaInsets();
     const { goBack } = useNavigation();
 
@@ -133,9 +135,16 @@ export function Header({ meal }: IHeaderProps) {
                         <AppText color={theme.colors.gray[300]}>
                             Calorias
                         </AppText>
-                        <AppText color={theme.colors.white} weight="medium">
-                            {summary?.calories || 0} kcal
-                        </AppText>
+                        <Skeleton width={61} height={24} colorMode="dark">
+                            {isLoading ? null : (
+                                <AppText
+                                    color={theme.colors.white}
+                                    weight="medium"
+                                >
+                                    {summary?.calories || 0} kcal
+                                </AppText>
+                            )}
+                        </Skeleton>
                     </View>
                 </View>
             </View>
@@ -143,62 +152,94 @@ export function Header({ meal }: IHeaderProps) {
             <View style={styles.macrosContainer}>
                 <View style={styles.macro}>
                     <AppText color={theme.colors.gray[700]}>Proteínas</AppText>
-                    <AppText weight="medium" color={theme.colors.support.teal}>
-                        {summary?.proteins || 0}g (
-                        {percentages.protein.toFixed(0)}%)
-                    </AppText>
+                    <Skeleton width={96} height={24} colorMode="light">
+                        {isLoading ? null : (
+                            <AppText
+                                weight="medium"
+                                color={theme.colors.support.teal}
+                            >
+                                {summary?.proteins || 0}g (
+                                {percentages.protein.toFixed(0)}%)
+                            </AppText>
+                        )}
+                    </Skeleton>
                 </View>
 
                 <View style={styles.macro}>
                     <AppText color={theme.colors.gray[700]}>
                         Carboidratos
                     </AppText>
-                    <AppText
-                        weight="medium"
-                        color={theme.colors.support.yellow}
-                    >
-                        {summary?.carbohydrates || 0}g (
-                        {percentages.carbohydrate.toFixed(0)}%)
-                    </AppText>
+                    <Skeleton width={96} height={24} colorMode="light">
+                        {isLoading ? null : (
+                            <AppText
+                                weight="medium"
+                                color={theme.colors.support.yellow}
+                            >
+                                {summary?.carbohydrates || 0}g (
+                                {percentages.carbohydrate.toFixed(0)}%)
+                            </AppText>
+                        )}
+                    </Skeleton>
                 </View>
 
                 <View style={styles.macro}>
                     <AppText color={theme.colors.gray[700]}>Gorduras</AppText>
-                    <AppText
-                        weight="medium"
-                        color={theme.colors.support.orange}
-                    >
-                        {summary?.fats || 0}g ({percentages.fat.toFixed(0)}%)
-                    </AppText>
+                    <Skeleton width={96} height={24} colorMode="light">
+                        {isLoading ? null : (
+                            <AppText
+                                weight="medium"
+                                color={theme.colors.support.orange}
+                            >
+                                {summary?.fats || 0}g (
+                                {percentages.fat.toFixed(0)}
+                                %)
+                            </AppText>
+                        )}
+                    </Skeleton>
                 </View>
             </View>
-
-            <View style={styles.macroProgress}>
-                <View
-                    style={[
-                        styles.proteinProgress,
-                        { width: `${percentages.protein}%` },
-                    ]}
-                />
-                <View
-                    style={[
-                        styles.carbohydrateProgress,
-                        { width: `${percentages.carbohydrate}%` },
-                    ]}
-                />
-                <View
-                    style={[
-                        styles.fatProgress,
-                        { width: `${percentages.fat}%` },
-                    ]}
-                />
+            <View style={styles.macrosProgressContainer}>
+                <Skeleton width="100%" height={4} colorMode="light">
+                    {isLoading ? null : (
+                        <View style={styles.macroProgress}>
+                            <View
+                                style={[
+                                    styles.proteinProgress,
+                                    { width: `${percentages.protein}%` },
+                                ]}
+                            />
+                            <View
+                                style={[
+                                    styles.carbohydrateProgress,
+                                    { width: `${percentages.carbohydrate}%` },
+                                ]}
+                            />
+                            <View
+                                style={[
+                                    styles.fatProgress,
+                                    { width: `${percentages.fat}%` },
+                                ]}
+                            />
+                        </View>
+                    )}
+                </Skeleton>
             </View>
 
             <View style={styles.divider} />
 
-            <AppText size="xl" weight="semiBold" style={styles.mealName}>
-                {meal?.name}
-            </AppText>
+            <View style={styles.mealNameContainer}>
+                <Skeleton width="50%" height={24} colorMode="light">
+                    {isLoading ? null : (
+                        <AppText
+                            size="xl"
+                            weight="semiBold"
+                            style={styles.mealName}
+                        >
+                            {meal?.name}
+                        </AppText>
+                    )}
+                </Skeleton>
+            </View>
 
             <AppText
                 weight="medium"
