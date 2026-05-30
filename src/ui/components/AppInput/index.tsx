@@ -1,44 +1,70 @@
-import { TextInput, TextInputProps } from 'react-native';
-import { inputStyles } from './styles';
 import { theme } from '@ui/styles/theme';
-import { useAppInputController } from './useAppInputController';
-import React from 'react';
+import {
+    BlurEvent,
+    FocusEvent,
+    TextInput,
+    TextInputProps,
+    View,
+} from 'react-native';
 
-type BaseTextInputProps = Omit<TextInputProps, 'readonly'>;
+import { useState } from 'react';
+import { AppText } from '../AppText';
+import { inputStyles, styles } from './styles';
+
+type BaseTextInputProps = Omit<
+    React.ComponentProps<typeof TextInput>,
+    'readOnly'
+>;
 
 export interface IInputProps extends BaseTextInputProps {
     error?: boolean;
     disabled?: boolean;
-    InputComponent?: React.ComponentType<BaseTextInputProps>;
+    InputComponent?: React.ComponentType<TextInputProps>;
     ref?: React.Ref<TextInput>;
     formatter?: (value: string) => string;
+    suffix?: string;
 }
 
 export function AppInput({
+    style,
     onFocus,
     onBlur,
     error,
     disabled,
     InputComponent = TextInput,
-    formatter,
     onChangeText,
+    formatter,
+    suffix,
     ...props
 }: IInputProps) {
-    const { getInputStatus, handleBlur, handleFocus, handleChangeText } =
-        useAppInputController({
-            error,
-            onFocus,
-            onBlur,
-            onChangeText,
-            formatter,
-        });
+    const [isFocused, setIsFocused] = useState(false);
 
-    return (
+    function handleFocus(event: FocusEvent) {
+        setIsFocused(true);
+        onFocus?.(event);
+    }
+
+    function handleBlur(event: BlurEvent) {
+        setIsFocused(false);
+        onBlur?.(event);
+    }
+
+    function handleChangeText(value: string) {
+        const formattedValue = formatter?.(value) ?? value;
+
+        onChangeText?.(formattedValue);
+    }
+
+    const input = (
         <InputComponent
-            style={inputStyles({
-                status: getInputStatus(),
-                disabled: disabled ? 'true' : 'false',
-            })}
+            style={[
+                inputStyles({
+                    status: error ? 'error' : isFocused ? 'focus' : 'default',
+                    disabled: disabled ? 'true' : 'false',
+                    hasSuffix: suffix ? 'true' : 'false',
+                }),
+                style,
+            ]}
             placeholderTextColor={theme.colors.gray[700]}
             onFocus={handleFocus}
             onBlur={handleBlur}
@@ -47,4 +73,17 @@ export function AppInput({
             {...props}
         />
     );
+
+    if (suffix) {
+        return (
+            <View style={styles.inputWithSuffix}>
+                {input}
+                <View style={styles.suffix}>
+                    <AppText color={theme.colors.gray[700]}>{suffix}</AppText>
+                </View>
+            </View>
+        );
+    }
+
+    return input;
 }

@@ -6,13 +6,19 @@ import { Image, TouchableOpacity, View } from 'react-native';
 import { styles } from './styles';
 import { AppButton } from '@ui/components/Button';
 import { TargetIcon } from 'lucide-react-native';
+import { useNavigation } from '@react-navigation/native';
+import { AppStackNavigationProps } from '@app/navigation/AppStack';
 
 export function UserHeader() {
     const { account } = useAccount();
+    const { navigate } = useNavigation<AppStackNavigationProps>();
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.userInfo}>
+            <TouchableOpacity
+                style={styles.userInfo}
+                onPress={() => navigate('EditProfile')}
+            >
                 <Image
                     source={{ uri: 'https://github.com/lucasfNeves.png' }}
                     style={styles.avatar}
@@ -28,7 +34,11 @@ export function UserHeader() {
                 </View>
             </TouchableOpacity>
 
-            <AppButton variant="ghost" leftIcon={TargetIcon}>
+            <AppButton
+                variant="ghost"
+                leftIcon={TargetIcon}
+                onPress={() => navigate('EditGoals')}
+            >
                 Metas
             </AppButton>
         </View>
