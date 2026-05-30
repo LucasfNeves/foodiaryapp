@@ -13,9 +13,10 @@ import { CreateMealLoader } from '@ui/components/CreateMealLoader';
 interface IAudioModalProps {
     visible: boolean;
     onClose: () => void;
+    onCreate?: () => void;
 }
 
-export function AudioModal({ visible, onClose }: IAudioModalProps) {
+export function AudioModal({ visible, onClose, onCreate }: IAudioModalProps) {
     const {
         state,
         isRecording,
@@ -24,7 +25,7 @@ export function AudioModal({ visible, onClose }: IAudioModalProps) {
         handleTryAgain,
         isLoading,
         audioUri,
-    } = useAudioModalController();
+    } = useAudioModalController({ onClose, onCreate });
 
     return (
         <Modal

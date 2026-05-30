@@ -9,10 +9,12 @@ import { PictureModal } from '../PictureModal';
 
 interface ICreateMealOptionsProps {
     disabled?: boolean;
+    onCreate?: () => void;
 }
 
 export function CreateMealOptions({
     disabled = false,
+    onCreate,
 }: ICreateMealOptionsProps) {
     const [currentVisibleModal, setCurrentVisibleModal] = useState<
         'audio' | 'picture' | null
@@ -31,11 +33,13 @@ export function CreateMealOptions({
             <AudioModal
                 visible={currentVisibleModal === 'audio'}
                 onClose={handleCloseModal}
+                onCreate={onCreate}
             />
 
             <PictureModal
                 visible={currentVisibleModal === 'picture'}
                 onClose={handleCloseModal}
+                onCreate={onCreate}
             />
 
             <OptionButton

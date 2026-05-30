@@ -5,6 +5,7 @@ import {
     NativeStackScreenProps,
 } from '@react-navigation/native-stack';
 import { Home } from '@ui/screens/Home';
+import { MealDetails } from '@ui/screens/MealDetails';
 
 export type AppStackParamList = {
     Home: undefined;
@@ -28,7 +29,7 @@ export function AppStack() {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="MealDetails" component={Home} />
+            <Stack.Screen name="MealDetails" component={MealDetails} />
         </Stack.Navigator>
     );
 }

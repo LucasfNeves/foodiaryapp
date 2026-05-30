@@ -1,0 +1,28 @@
+import { FlatList, View } from 'react-native';
+import { useRoute } from '@react-navigation/native';
+import { AppStackRouteProps } from '@app/navigation/AppStack';
+import { Header } from './components/Header';
+import { useMeal } from '@app/hooks/queries/useMeal';
+import { AppText } from '@ui/components/AppText';
+import { styles } from './styles';
+
+export function MealDetails() {
+    const { params } = useRoute<AppStackRouteProps<'MealDetails'>>();
+    const { meal } = useMeal(params.mealId);
+
+    return (
+        <View>
+            <FlatList
+                data={meal?.foods || []}
+                ListHeaderComponent={<Header meal={meal} />}
+                renderItem={({ item: food }) => (
+                    <View style={styles.food}>
+                        <AppText>
+                            {food.quantity} {food.name}
+                        </AppText>
+                    </View>
+                )}
+            />
+        </View>
+    );
+}

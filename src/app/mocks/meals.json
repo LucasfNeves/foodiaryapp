@@ -1,0 +1,152 @@
+[
+    {
+        "id": "meal-001",
+        "status": "SUCCESS",
+        "inputType": "AUDIO",
+        "inputFileUrl": "https://example.com/audio/meal-001.m4a",
+        "name": "Café da manhã",
+        "icon": "☕",
+        "foods": [
+            {
+                "name": "Pão integral",
+                "quantity": "2 fatias",
+                "calories": 140,
+                "proteins": 6,
+                "carbohydrates": 24,
+                "fats": 2
+            },
+            {
+                "name": "Ovo cozido",
+                "quantity": "2 unidades",
+                "calories": 156,
+                "proteins": 12,
+                "carbohydrates": 1,
+                "fats": 10
+            },
+            {
+                "name": "Banana",
+                "quantity": "1 unidade",
+                "calories": 89,
+                "proteins": 1,
+                "carbohydrates": 23,
+                "fats": 0
+            }
+        ],
+        "createdAt": "2026-05-26T08:30:00.000Z"
+    },
+    {
+        "id": "meal-002",
+        "status": "SUCCESS",
+        "inputType": "PICTURE",
+        "inputFileUrl": "https://example.com/images/meal-002.jpg",
+        "name": "Almoço",
+        "icon": "🍛",
+        "foods": [
+            {
+                "name": "Arroz branco",
+                "quantity": "150g",
+                "calories": 195,
+                "proteins": 4,
+                "carbohydrates": 43,
+                "fats": 0
+            },
+            {
+                "name": "Feijão preto",
+                "quantity": "100g",
+                "calories": 77,
+                "proteins": 5,
+                "carbohydrates": 14,
+                "fats": 0
+            },
+            {
+                "name": "Frango grelhado",
+                "quantity": "120g",
+                "calories": 198,
+                "proteins": 37,
+                "carbohydrates": 0,
+                "fats": 4
+            },
+            {
+                "name": "Salada verde",
+                "quantity": "100g",
+                "calories": 20,
+                "proteins": 2,
+                "carbohydrates": 3,
+                "fats": 0
+            }
+        ],
+        "createdAt": "2026-05-26T12:15:00.000Z"
+    },
+    {
+        "id": "meal-003",
+        "status": "SUCCESS",
+        "inputType": "AUDIO",
+        "inputFileUrl": "https://example.com/audio/meal-003.m4a",
+        "name": "Lanche da tarde",
+        "icon": "🍎",
+        "foods": [
+            {
+                "name": "Iogurte natural",
+                "quantity": "170g",
+                "calories": 100,
+                "proteins": 17,
+                "carbohydrates": 6,
+                "fats": 1
+            },
+            {
+                "name": "Granola",
+                "quantity": "30g",
+                "calories": 132,
+                "proteins": 3,
+                "carbohydrates": 22,
+                "fats": 4
+            }
+        ],
+        "createdAt": "2026-05-26T15:45:00.000Z"
+    },
+    {
+        "id": "meal-004",
+        "status": "SUCCESS",
+        "inputType": "PICTURE",
+        "inputFileUrl": "https://example.com/images/meal-004.jpg",
+        "name": "Jantar",
+        "icon": "🥗",
+        "foods": [
+            {
+                "name": "Salmão grelhado",
+                "quantity": "150g",
+                "calories": 280,
+                "proteins": 35,
+                "carbohydrates": 0,
+                "fats": 15
+            },
+            {
+                "name": "Batata doce",
+                "quantity": "200g",
+                "calories": 172,
+                "proteins": 3,
+                "carbohydrates": 40,
+                "fats": 0
+            },
+            {
+                "name": "Brócolis",
+                "quantity": "100g",
+                "calories": 34,
+                "proteins": 3,
+                "carbohydrates": 7,
+                "fats": 0
+            }
+        ],
+        "createdAt": "2026-05-26T19:30:00.000Z"
+    },
+    {
+        "id": "meal-005",
+        "status": "PROCESSING",
+        "inputType": "AUDIO",
+        "inputFileUrl": "https://example.com/audio/meal-005.m4a",
+        "name": "Pré-treino",
+        "icon": "💪",
+        "foods": [],
+        "createdAt": "2026-05-26T17:00:00.000Z"
+    }
+]

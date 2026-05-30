@@ -1,13 +1,36 @@
 import { useCreateMeal } from '@app/hooks/mutations/useCreateMeal';
 import { useMeal } from '@app/hooks/queries/useMeal';
+import { AppStackNavigationProps } from '@app/navigation/AppStack';
+import { useNavigation } from '@react-navigation/native';
+import { useQueryClient } from '@tanstack/react-query';
 import { CameraView, useCameraPermissions } from 'expo-camera';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Alert } from 'react-native';
 
-export function usePictureModalController() {
+interface IPictureModalController {
+    onClose: () => void;
+    onCreate?: () => void;
+}
+
+export function usePictureModalController({
+    onClose,
+    onCreate,
+}: IPictureModalController) {
     const [permission, requestPermission] = useCameraPermissions();
     const cameraRef = useRef<CameraView | null>(null);
     const [photoUri, setPhotoUri] = useState<string | null>(null);
+    const { navigate } = useNavigation<AppStackNavigationProps>();
+    const queryClient = useQueryClient();
+
+    const memoizedOnClose = useRef(onClose);
+    useLayoutEffect(() => {
+        memoizedOnClose.current = onClose;
+    }, [onClose]);
+
+    const memoizedOnCreate = useRef(onCreate);
+    useLayoutEffect(() => {
+        memoizedOnCreate.current = onCreate;
+    }, [onCreate]);
 
     const {
         createMeal,
@@ -23,6 +46,10 @@ export function usePictureModalController() {
 
     useEffect(() => {
         if (meal && meal.status === 'SUCCESS') {
+            memoizedOnClose.current();
+            memoizedOnCreate.current?.();
+            navigate('MealDetails', { mealId: meal.id });
+            queryClient.invalidateQueries({ queryKey: ['meals'] });
         }
 
         if (meal && meal.status === 'FAILED') {
@@ -31,7 +58,7 @@ export function usePictureModalController() {
                 'Ocorreu um erro ao criar a sua refeição. Por favor, tente novamente.',
             );
         }
-    }, [meal?.status]);
+    }, [meal?.status, navigate, meal?.id, queryClient]);
 
     async function handleTakePicture() {
         if (!cameraRef.current) {
@@ -56,8 +83,11 @@ export function usePictureModalController() {
 
         try {
             await createMeal(photoUri);
-        } catch (error) {
-            console.log(error);
+        } catch {
+            Alert.alert(
+                'Oops!',
+                'Ocorreu um erro ao criar a sua refeição. Por favor, tente novamente.',
+            );
         }
     }
 

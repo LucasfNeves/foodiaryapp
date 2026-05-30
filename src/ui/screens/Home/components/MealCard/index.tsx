@@ -5,6 +5,8 @@ import { AppText } from '@ui/components/AppText';
 import { theme } from '@ui/styles/theme';
 import { SimplifiedMeal } from '@app/types/Meal';
 import { useHomeContext } from '../../context/useHomeContext';
+import { useNavigation } from '@react-navigation/native';
+import { AppStackNavigationProps } from '@app/navigation/AppStack';
 
 interface IMealCardProps {
     meal: SimplifiedMeal;
@@ -12,18 +14,30 @@ interface IMealCardProps {
 
 export function MealCard({ meal }: IMealCardProps) {
     const { isLoading } = useHomeContext();
+    const { navigate } = useNavigation<AppStackNavigationProps>();
+
     const formattedFoods = useMemo(() => {
         return meal.foods.map((food) => food.name).join(', ');
     }, [meal.foods]);
 
     const summary = useMemo(() => {
         return meal.foods.reduce(
-            (acc, food) => ({
-                calories: acc.calories + food.calories,
-                carbohydrates: acc.carbohydrates + food.carbohydrates,
-                proteins: acc.proteins + food.proteins,
-                fats: acc.fats + food.fats,
-            }),
+            (acc, food) => {
+                const proteinCalories = food?.proteins * 4;
+                const carbohydrateCalories = food?.carbohydrates * 4;
+                const fatCalories = food?.fats * 9;
+
+                const totalCalories = Math.round(
+                    proteinCalories + carbohydrateCalories + fatCalories,
+                );
+
+                return {
+                    calories: acc.calories + totalCalories,
+                    carbohydrates: acc.carbohydrates + food.carbohydrates,
+                    proteins: acc.proteins + food.proteins,
+                    fats: acc.fats + food.fats,
+                };
+            },
             { calories: 0, carbohydrates: 0, proteins: 0, fats: 0 },
         );
     }, [meal.foods]);
@@ -45,6 +59,7 @@ export function MealCard({ meal }: IMealCardProps) {
                         color: 'rgba(0, 0, 0, 0.1)',
                         foreground: true,
                     }}
+                    onPress={() => navigate('MealDetails', { mealId: meal.id })}
                 >
                     <View style={styles.header}>
                         <View style={styles.icon}>
